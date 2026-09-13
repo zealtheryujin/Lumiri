@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="assets/mascot/lumiri-anime.png" alt="Lumiri mascot" width="180">
+  <img src="assets/mascot/lumiri-anime.png" alt="Lumiri mascot" width="280">
 </p>
 
 ## ENG — English
