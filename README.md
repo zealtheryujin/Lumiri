@@ -65,16 +65,13 @@ These are requested upper limits; identical frequencies and stability are not gu
 
 Choose **ZL + ZR + Plus → Switch Monitor** to cycle to the next monitor. The monitor must be connected to the capture GPU and enabled in the Windows desktop. Switching capture does not move the game window.
 
-### Updating and saved settings
-
-Replace `SD:/switch/lumiri.nro` with the new NRO. Close the host before updating it. Preferences are saved in `SD:/switch/lumiri.cfg`; an existing `remoteplay.cfg` can also be read on first load. Keep your existing `games.txt` beside the host EXE to preserve custom games. Run `firewall-onar.bat` again if you move the host folder.
 
 ### Troubleshooting
 
 | Problem | What to check |
 |:--|:--|
 | PC not found / connection refused | Check the host is open and ready, verify the IP and local network, and run the firewall helper. |
-| No handshake reply | Open with `host-baslat.bat` and check the last host message. Press Esc if an older console has text selected. |
+| No handshake reply | Press Esc if an older console has text selected. |
 | Host opens and closes | Another host may already be running. Close older hosts and retry. |
 | AMD AMF error | Update the AMD driver and check that the GPU supports hardware H.264 encoding. |
 | Stuttering | Lower resolution or bitrate; check PC load and the network connection. |
@@ -147,10 +144,6 @@ Bunlar istenen üst sınırlardır; her cihazda aynı hız veya stabilite garant
 ### Monitör değiştirme
 
 **ZL + ZR + Plus → Monitör Değiştir** ile sıradaki monitöre geç. Monitörün yakalama yapılan ekran kartına bağlı ve Windows masaüstünde etkin olması gerekir. Bu işlem oyun penceresini diğer monitöre taşımaz.
-
-### Güncelleme ve kayıtlı ayarlar
-
-Yeni NRO'yu `SD:/switch/lumiri.nro` üzerine kopyala. Host'u güncellemeden önce kapat. Ayarlar `SD:/switch/lumiri.cfg` içinde saklanır; eski `remoteplay.cfg` dosyası da ilk yüklemede okunabilir. Özel oyunlarını korumak için mevcut `games.txt` dosyanı host EXE'sinin yanında tut. Host klasörünü taşırsan `firewall-onar.bat` dosyasını yeniden çalıştır.
 
 ### Sorun giderme
 
