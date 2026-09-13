@@ -51,6 +51,8 @@ Press **B** to save. Theme-only or language-only changes apply during a stream w
 
 ### Recommended OC profile
 
+**OC support must be installed and configured on your Switch to increase frequencies.** Lumiri NRO cannot raise clocks on its own or install OC support. Its OC settings only request frequencies made available by your OC setup.
+
 | Setting | Value |
 |:--|:--|
 | Performance | Maximum |
@@ -130,6 +132,8 @@ Ana ekranda **Y**'ye veya yayın sırasında **ZL + ZR + Plus → Yayın Ayarlar
 **B** değişiklikleri kaydeder. Yayındayken yalnızca tema veya dil değişirse yeniden bağlanılmaz. Yayın veya OC ayarları değişirse aynı PC'ye kısa bir kesintiyle yeniden bağlanılır; oyun tekrar başlatılmaz. **X**, yayın ayarlarındaki değişiklikleri iptal eder.
 
 ### Tavsiye edilen OC profili
+
+**Frekansları artırmak için Switch'inde OC desteğinin kurulu ve yapılandırılmış olması gerekir.** Lumiri NRO tek başına frekansları yükseltemez veya OC desteği kuramaz. Uygulamadaki OC ayarları yalnızca mevcut OC kurulumunun kullanıma açtığı frekansları talep eder.
 
 | Ayar | Değer |
 |:--|:--|
