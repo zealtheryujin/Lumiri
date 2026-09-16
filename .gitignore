@@ -1,0 +1,10 @@
+Lumiri/
+Lumiri.zip
+out/
+build/
+*.obj
+*.elf
+*.nro
+*.nacp
+*.log
+firewall-backup-*.json
