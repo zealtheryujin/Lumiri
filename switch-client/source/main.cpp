@@ -33,7 +33,7 @@ void Settings::load() {
     char k[32]; int v;
     while (fscanf(f, "%31[^=]=%d\n", k, &v) == 2) {
         if (!strcmp(k, "res")) resIdx = v < 0 ? 0 : v > 3 ? 3 : v;
-        else if (!strcmp(k, "fps")) fps = (v == 30) ? 30 : 60;
+        else if (!strcmp(k, "fps")) fps = (v == 0 || v == 30 || v == 60 || v == 120) ? v : 60;
         else if (!strcmp(k, "mbps")) bitrateMbps = v < 2 ? 2 : v > 50 ? 50 : v;
         else if (!strcmp(k, "audio")) audio = v != 0;
         else if (!strcmp(k, "perf")) maxPerformance = v != 0;
@@ -589,7 +589,13 @@ static void drawSettings(uint32_t pressed) {
             if (cfg.resIdx < 0) cfg.resIdx = 0;
             if (cfg.resIdx > 3) cfg.resIdx = 3;
             break;
-        case 1: cfg.fps = cfg.fps == 60 ? 30 : 60; break;
+        case 1: {
+            const int modes[] = {30, 60, 120, 0};
+            int index = 0;
+            while (index < 3 && modes[index] != cfg.fps) ++index;
+            cfg.fps = modes[(index + d + 4) % 4];
+            break;
+        }
         case 2: cfg.bitrateMbps += d * (cfg.bitrateMbps >= 10 ? 5 : 1);
             if (cfg.bitrateMbps < 2) cfg.bitrateMbps = 2;
             if (cfg.bitrateMbps > 50) cfg.bitrateMbps = 50;
@@ -644,7 +650,8 @@ static void drawSettings(uint32_t pressed) {
     char vals[N][32];
     static const char* RES_NAMES[] = { "480p", "540p", "720p", "1080p" };
     snprintf(vals[0], 32, "%s", RES_NAMES[cfg.resIdx & 3]);
-    snprintf(vals[1], 32, "%d fps", cfg.fps);
+    if (cfg.fps == 0) snprintf(vals[1], 32, "%s", tr("Sınırsız", "Unlimited"));
+    else snprintf(vals[1], 32, "%d fps", cfg.fps);
     snprintf(vals[2], 32, "%d Mbps", cfg.bitrateMbps);
     snprintf(vals[3], 32, "%s", cfg.audio ? tr("Açık", "On") : tr("Kapalı", "Off"));
     snprintf(vals[4], 32, "%s", cfg.maxPerformance ? tr("Maksimum", "Maximum") : tr("Dengeli", "Balanced"));

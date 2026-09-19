@@ -635,7 +635,7 @@ void videoThread() {
     timeBeginPeriod(1);
     LARGE_INTEGER freq, now; QueryPerformanceFrequency(&freq);
     QueryPerformanceCounter(&now);
-    const int64_t interval = freq.QuadPart / g_session.fps;
+    const int64_t interval = g_session.unlimitedFps ? 0 : freq.QuadPart / g_session.fps;
     int64_t next = now.QuadPart + interval;
     uint32_t frameId = 0;
 
@@ -658,7 +658,7 @@ void videoThread() {
         int64_t waitMs = (next - now.QuadPart) * 1000 / freq.QuadPart;
         LARGE_INTEGER captureStart, captureEnd;
         QueryPerformanceCounter(&captureStart);
-        if (!renderFrame(p, waitMs > 0 ? (UINT)waitMs : 0)) break;
+        if (!renderFrame(p, g_session.unlimitedFps ? 100 : (waitMs > 0 ? (UINT)waitMs : 0))) break;
         QueryPerformanceCounter(&captureEnd);
         slot.capturedMs = GetTickCount64();
         slot.busy = true;
@@ -695,11 +695,12 @@ void videoThread() {
     g_session.stop = true;
 }
 
-int videoSelfTest(const char* path, bool sync, bool slow, bool monitor) {
+int videoSelfTest(const char* path, bool sync, bool slow, bool monitor, unsigned fps) {
     if (fopen_s(&g_testOutput, path, "wb") || !g_testOutput) return 2;
     g_testSync = sync; g_testSendDelay = slow ? 80 : 0;
     g_testMonitor = monitor;
-    g_session.width = 1280; g_session.height = 720; g_session.fps = 60;
+    g_session.width = 1280; g_session.height = 720; g_session.fps = fps ? fps : 120;
+    g_session.unlimitedFps = fps == 0;
     g_session.bitrateKbps = 8000; g_session.audioEnabled = false;
     g_session.active = true; g_session.stop = false; g_session.wantIdr = true;
     g_session.videoFrames = 0; g_session.videoBytes = 0;

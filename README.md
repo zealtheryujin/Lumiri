@@ -44,7 +44,7 @@ Choose **Add a game**, select a PC `.exe`, and enter its name. The session menu 
 
 Press **Y** on the home screen, or open **ZL + ZR + Plus → Stream Settings** during a stream.
 
-- **Picture & sound:** resolution, FPS, bitrate, and audio. Initial values are 720p, 60 FPS, and 8 Mbps.
+- **Picture & sound:** resolution, FPS, bitrate, and audio. Initial values are 720p, 60 FPS, and 8 Mbps. FPS options: 30, 60, 120, and Unlimited. Unlimited removes the host streaming timer limit; capture and hardware capacity still determine throughput. It does not increase the Switch display refresh rate. Higher FPS at the same bitrate may reduce picture quality. Update both the host and NRO to use these modes.
 - **Experience:** performance, H.264 decoder, and mouse sensitivity. **NVDEC** uses Switch hardware decoding with software fallback if unavailable. **Software (CPU)** uses CPU decoding. Video is always H.264; an AMD PC does not change the Switch's NVDEC option.
 - **Clock limits:** OC control and CPU/GPU/RAM limits.
 - **Appearance & language:** Light/Dark theme and English/Turkish. The app starts in English with the Light theme by default.
@@ -131,7 +131,7 @@ Yayında tuşlar Xbox konumlarına göre eşleşir: Switch B → Xbox A, A → B
 
 Ana ekranda **Y**'ye veya yayın sırasında **ZL + ZR + Plus → Yayın Ayarları**'na gir.
 
-- **Görüntü ve ses:** çözünürlük, FPS, bit hızı ve ses. Başlangıç değerleri 720p, 60 FPS ve 8 Mbps'dir.
+- **Görüntü ve ses:** çözünürlük, FPS, bit hızı ve ses. Başlangıç değerleri 720p, 60 FPS ve 8 Mbps'dir. FPS seçenekleri: 30, 60, 120 ve Sınırsız. Sınırsız, host yayın zamanlayıcısının sınırını kaldırır; gerçek hız yakalama ve donanım kapasitesine bağlıdır. Switch ekranının yenileme hızını artırmaz. Aynı bit hızında daha yüksek FPS görüntü kalitesini düşürebilir. Bu modlar için hem host hem NRO güncellenmelidir.
 - **Deneyim:** performans, H.264 çözücü ve fare hassasiyeti. **NVDEC**, Switch'in donanım çözücüsünü kullanır; açılamazsa yazılıma döner. **Yazılım (CPU)**, CPU ile çözer. Yayın her zaman H.264'tür; PC'nin AMD olması NVDEC seçimini değiştirmez.
 - **Frekanslar:** OC kontrolü ve CPU/GPU/RAM sınırları.
 - **Görünüm ve dil:** açık/koyu tema ve Türkçe/İngilizce. Uygulama varsayılan olarak İngilizce ve açık temayla açılır.
