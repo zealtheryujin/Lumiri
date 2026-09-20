@@ -6,6 +6,10 @@
 
 Stream your PC desktop and games to Nintendo Switch.
 
+### Use at your own risk
+
+Lumiri is provided as is, without any assurance or warranty. You use the application and change streaming or OC settings at your own risk and responsibility. Performance, stability, compatibility, uninterrupted operation, and device safety are not guaranteed.
+
 ### Setup and connection
 
 1. Extract `Lumiri.zip` into a folder on your PC. Close any previously running host.
@@ -44,12 +48,16 @@ Choose **Add a game**, select a PC `.exe`, and enter its name. The session menu 
 
 Press **Y** on the home screen, or open **ZL + ZR + Plus → Stream Settings** during a stream.
 
-- **Picture & sound:** resolution, FPS, bitrate, and audio. Initial values are 720p, 60 FPS, and 8 Mbps. FPS options: 30, 60, 120, and Unlimited. Unlimited removes the host streaming timer limit; capture and hardware capacity still determine throughput. It does not increase the Switch display refresh rate. Higher FPS at the same bitrate may reduce picture quality. Update both the host and NRO to use these modes.
+- **Picture & sound:** resolution, FPS, bitrate, and audio. Initial values are 720p, 60 FPS, and 8 Mbps. Bitrate range: 2–35 Mbps. Above 10 Mbps, adjust in 5 Mbps steps. Higher bitrate increases network traffic and does not guarantee higher FPS. FPS options: 30, 60, 120, and Unlimited. Unlimited removes the host streaming timer limit; capture and hardware capacity still determine throughput. It does not increase the Switch display refresh rate. Higher FPS at the same bitrate may reduce picture quality. Update both the host and NRO to use these modes.
 - **Experience:** performance, H.264 decoder, and mouse sensitivity. **NVDEC** uses Switch hardware decoding with software fallback if unavailable. **Software (CPU)** uses CPU decoding. Video is always H.264; an AMD PC does not change the Switch's NVDEC option.
 - **Clock limits:** OC control and CPU/GPU/RAM limits.
 - **Appearance & language:** Light/Dark theme and English/Turkish. The app starts in English with the Light theme by default.
 
 Press **B** to save. Theme-only or language-only changes apply during a stream without reconnecting. Stream or OC changes reconnect to the same PC with a brief interruption; the game is not relaunched. Press **X** to discard changes in the connected settings menu.
+
+### Video presentation
+
+This build uses SDL presentation with NVDEC hardware decoding when available. Experimental direct GPU presentation is disabled after a reported startup failure. Existing `directmode=1` settings are ignored in this build; no configuration reset is required.
 
 ### Recommended OC profile
 
@@ -93,6 +101,10 @@ Host log: `lumiri-host.log` beside the EXE. Switch logs: `SD:/switch/lumiri-boot
 
 PC ekranını ve oyunlarını Nintendo Switch'e aktar.
 
+### Kullanım sorumluluğu
+
+Lumiri olduğu gibi sunulur; herhangi bir güvence veya garanti verilmez. Uygulamanın kullanımı ile yayın ve OC ayarlarında yapılan değişikliklerin riski ve sorumluluğu kullanıcıya aittir. Performans, stabilite, uyumluluk, kesintisiz çalışma veya cihaz güvenliği garanti edilmez.
+
 ### Kurulum ve bağlantı
 
 1. `Lumiri.zip` dosyasını PC'de bir klasöre çıkart. Önceden açık olan host'u kapat.
@@ -131,12 +143,16 @@ Yayında tuşlar Xbox konumlarına göre eşleşir: Switch B → Xbox A, A → B
 
 Ana ekranda **Y**'ye veya yayın sırasında **ZL + ZR + Plus → Yayın Ayarları**'na gir.
 
-- **Görüntü ve ses:** çözünürlük, FPS, bit hızı ve ses. Başlangıç değerleri 720p, 60 FPS ve 8 Mbps'dir. FPS seçenekleri: 30, 60, 120 ve Sınırsız. Sınırsız, host yayın zamanlayıcısının sınırını kaldırır; gerçek hız yakalama ve donanım kapasitesine bağlıdır. Switch ekranının yenileme hızını artırmaz. Aynı bit hızında daha yüksek FPS görüntü kalitesini düşürebilir. Bu modlar için hem host hem NRO güncellenmelidir.
+- **Görüntü ve ses:** çözünürlük, FPS, bit hızı ve ses. Başlangıç değerleri 720p, 60 FPS ve 8 Mbps'dir. Bit hızı aralığı: 2–35 Mbps. 10 Mbps üzerinde 5 Mbps adımlarla ayarlanır. Daha yüksek bit hızı ağ trafiğini artırır; daha yüksek FPS garantilemez. FPS seçenekleri: 30, 60, 120 ve Sınırsız. Sınırsız, host yayın zamanlayıcısının sınırını kaldırır; gerçek hız yakalama ve donanım kapasitesine bağlıdır. Switch ekranının yenileme hızını artırmaz. Aynı bit hızında daha yüksek FPS görüntü kalitesini düşürebilir. Bu modlar için hem host hem NRO güncellenmelidir.
 - **Deneyim:** performans, H.264 çözücü ve fare hassasiyeti. **NVDEC**, Switch'in donanım çözücüsünü kullanır; açılamazsa yazılıma döner. **Yazılım (CPU)**, CPU ile çözer. Yayın her zaman H.264'tür; PC'nin AMD olması NVDEC seçimini değiştirmez.
 - **Frekanslar:** OC kontrolü ve CPU/GPU/RAM sınırları.
 - **Görünüm ve dil:** açık/koyu tema ve Türkçe/İngilizce. Uygulama varsayılan olarak İngilizce ve açık temayla açılır.
 
 **B** değişiklikleri kaydeder. Yayındayken yalnızca tema veya dil değişirse yeniden bağlanılmaz. Yayın veya OC ayarları değişirse aynı PC'ye kısa bir kesintiyle yeniden bağlanılır; oyun tekrar başlatılmaz. **X**, yayın ayarlarındaki değişiklikleri iptal eder.
+
+### Görüntü sunumu
+
+Bu derleme, kullanılabildiğinde NVDEC donanım çözmesiyle SDL görüntü sunumunu kullanır. Bildirilen açılış hatası nedeniyle deneysel doğrudan GPU sunumu kapatılmıştır. Mevcut `directmode=1` ayarı bu derlemede yok sayılır; ayar dosyasını sıfırlamak gerekmez.
 
 ### Tavsiye edilen OC profili
 

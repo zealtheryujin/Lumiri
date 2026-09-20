@@ -268,7 +268,7 @@ static void serveClient(SOCKET c, sockaddr_in peer) {
                     (hs.width == 1280 && hs.height == 720) ||
                     (hs.width == 1920 && hs.height == 1080);
     if (!validRes || (hs.fps != 0 && hs.fps != 30 && hs.fps != 60 && hs.fps != 120) ||
-        hs.bitrateKbps < 2000 || hs.bitrateKbps > 50000) {
+        hs.bitrateKbps < 2000 || hs.bitrateKbps > 35000) {
         RpHandshakeAck nak{ RP_MAGIC, 0, 0, 0 };
         send(c, (char*)&nak, sizeof(nak), 0);
         closesocket(c);

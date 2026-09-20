@@ -34,11 +34,11 @@ void Settings::load() {
     while (fscanf(f, "%31[^=]=%d\n", k, &v) == 2) {
         if (!strcmp(k, "res")) resIdx = v < 0 ? 0 : v > 3 ? 3 : v;
         else if (!strcmp(k, "fps")) fps = (v == 0 || v == 30 || v == 60 || v == 120) ? v : 60;
-        else if (!strcmp(k, "mbps")) bitrateMbps = v < 2 ? 2 : v > 50 ? 50 : v;
+        else if (!strcmp(k, "mbps")) bitrateMbps = v < 2 ? 2 : v > 35 ? 35 : v;
         else if (!strcmp(k, "audio")) audio = v != 0;
         else if (!strcmp(k, "perf")) maxPerformance = v != 0;
         else if (!strcmp(k, "hwdec")) hwDecode = v != 0;
-        else if (!strcmp(k, "direct")) directVideo = v != 0;
+        else if (!strcmp(k, "directmode")) directVideo = v != 0;
         else if (!strcmp(k, "sens")) mouseSens = v < 1 ? 1 : v > 10 ? 10 : v;
         else if (!strcmp(k, "clk")) clocks = v != 0;
         else if (!strcmp(k, "cpumax")) cpuMax = v < 0 ? -1 : v > 3 ? 3 : v;
@@ -53,7 +53,7 @@ void Settings::load() {
 void Settings::save() const {
     FILE* f = fopen(CFG_PATH, "w");
     if (!f) return;
-    fprintf(f, "res=%d\nfps=%d\nmbps=%d\naudio=%d\nperf=%d\nhwdec=%d\nsens=%d\nclk=%d\ncpumax=%d\ngpumax=%d\ndirect=%d\nrammhz=%d\n",
+    fprintf(f, "res=%d\nfps=%d\nmbps=%d\naudio=%d\nperf=%d\nhwdec=%d\nsens=%d\nclk=%d\ncpumax=%d\ngpumax=%d\ndirectmode=%d\nrammhz=%d\n",
             resIdx, fps, bitrateMbps, audio ? 1 : 0,
             maxPerformance ? 1 : 0, hwDecode ? 1 : 0, mouseSens, clocks ? 1 : 0,
             cpuMax, gpuMax, directVideo ? 1 : 0, ramMHz);
@@ -598,7 +598,7 @@ static void drawSettings(uint32_t pressed) {
         }
         case 2: cfg.bitrateMbps += d * (cfg.bitrateMbps >= 10 ? 5 : 1);
             if (cfg.bitrateMbps < 2) cfg.bitrateMbps = 2;
-            if (cfg.bitrateMbps > 50) cfg.bitrateMbps = 50;
+            if (cfg.bitrateMbps > 35) cfg.bitrateMbps = 35;
             break;
         case 3: cfg.audio = !cfg.audio; break;
         case 4: cfg.maxPerformance = !cfg.maxPerformance; break;
