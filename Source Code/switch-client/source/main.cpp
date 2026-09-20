@@ -33,12 +33,12 @@ void Settings::load() {
     char k[32]; int v;
     while (fscanf(f, "%31[^=]=%d\n", k, &v) == 2) {
         if (!strcmp(k, "res")) resIdx = v < 0 ? 0 : v > 3 ? 3 : v;
-        else if (!strcmp(k, "fps")) fps = (v == 30) ? 30 : 60;
-        else if (!strcmp(k, "mbps")) bitrateMbps = v < 2 ? 2 : v > 50 ? 50 : v;
+        else if (!strcmp(k, "fps")) fps = (v == 0 || v == 30 || v == 60 || v == 120) ? v : 60;
+        else if (!strcmp(k, "mbps")) bitrateMbps = v < 2 ? 2 : v > 35 ? 35 : v;
         else if (!strcmp(k, "audio")) audio = v != 0;
         else if (!strcmp(k, "perf")) maxPerformance = v != 0;
         else if (!strcmp(k, "hwdec")) hwDecode = v != 0;
-        else if (!strcmp(k, "direct")) directVideo = v != 0;
+        else if (!strcmp(k, "directmode")) directVideo = v != 0;
         else if (!strcmp(k, "sens")) mouseSens = v < 1 ? 1 : v > 10 ? 10 : v;
         else if (!strcmp(k, "clk")) clocks = v != 0;
         else if (!strcmp(k, "cpumax")) cpuMax = v < 0 ? -1 : v > 3 ? 3 : v;
@@ -53,7 +53,7 @@ void Settings::load() {
 void Settings::save() const {
     FILE* f = fopen(CFG_PATH, "w");
     if (!f) return;
-    fprintf(f, "res=%d\nfps=%d\nmbps=%d\naudio=%d\nperf=%d\nhwdec=%d\nsens=%d\nclk=%d\ncpumax=%d\ngpumax=%d\ndirect=%d\nrammhz=%d\n",
+    fprintf(f, "res=%d\nfps=%d\nmbps=%d\naudio=%d\nperf=%d\nhwdec=%d\nsens=%d\nclk=%d\ncpumax=%d\ngpumax=%d\ndirectmode=%d\nrammhz=%d\n",
             resIdx, fps, bitrateMbps, audio ? 1 : 0,
             maxPerformance ? 1 : 0, hwDecode ? 1 : 0, mouseSens, clocks ? 1 : 0,
             cpuMax, gpuMax, directVideo ? 1 : 0, ramMHz);
@@ -79,15 +79,15 @@ static bool swkbdText(const char* guide, const char* initial, char* out, size_t 
     return R_SUCCEEDED(rc) && out[0];
 }
 
-static uint32_t readButtons() {
+static uint32_t readButtons(bool xboxLayout = false) {
     if (!g_pad) return 0;
     uint32_t b = 0;
     auto btn = [&](SDL_GameControllerButton s, uint32_t r) {
         if (SDL_GameControllerGetButton(g_pad, s)) b |= r; };
-    btn(SDL_CONTROLLER_BUTTON_B, RP_BTN_A);
-    btn(SDL_CONTROLLER_BUTTON_A, RP_BTN_B);
-    btn(SDL_CONTROLLER_BUTTON_Y, RP_BTN_X);
-    btn(SDL_CONTROLLER_BUTTON_X, RP_BTN_Y);
+    btn(SDL_CONTROLLER_BUTTON_B, xboxLayout ? RP_BTN_B : RP_BTN_A);
+    btn(SDL_CONTROLLER_BUTTON_A, xboxLayout ? RP_BTN_A : RP_BTN_B);
+    btn(SDL_CONTROLLER_BUTTON_Y, xboxLayout ? RP_BTN_Y : RP_BTN_X);
+    btn(SDL_CONTROLLER_BUTTON_X, xboxLayout ? RP_BTN_X : RP_BTN_Y);
     btn(SDL_CONTROLLER_BUTTON_LEFTSTICK, RP_BTN_LSTICK);
     btn(SDL_CONTROLLER_BUTTON_RIGHTSTICK, RP_BTN_RSTICK);
     btn(SDL_CONTROLLER_BUTTON_LEFTSHOULDER, RP_BTN_L);
@@ -331,7 +331,7 @@ static void inputLoop() {
         pkt.magic = RP_MAGIC;
         pkt.seq = g_inputSeq++;
         if (!g_overlay) {
-            pkt.buttons = readButtons();
+            pkt.buttons = readButtons(true);
             pkt.lx = axisVal(SDL_CONTROLLER_AXIS_LEFTX, false);
             pkt.ly = axisVal(SDL_CONTROLLER_AXIS_LEFTY, true);
             pkt.rx = axisVal(SDL_CONTROLLER_AXIS_RIGHTX, false);
@@ -589,10 +589,16 @@ static void drawSettings(uint32_t pressed) {
             if (cfg.resIdx < 0) cfg.resIdx = 0;
             if (cfg.resIdx > 3) cfg.resIdx = 3;
             break;
-        case 1: cfg.fps = cfg.fps == 60 ? 30 : 60; break;
+        case 1: {
+            const int modes[] = {30, 60, 120, 0};
+            int index = 0;
+            while (index < 3 && modes[index] != cfg.fps) ++index;
+            cfg.fps = modes[(index + d + 4) % 4];
+            break;
+        }
         case 2: cfg.bitrateMbps += d * (cfg.bitrateMbps >= 10 ? 5 : 1);
             if (cfg.bitrateMbps < 2) cfg.bitrateMbps = 2;
-            if (cfg.bitrateMbps > 50) cfg.bitrateMbps = 50;
+            if (cfg.bitrateMbps > 35) cfg.bitrateMbps = 35;
             break;
         case 3: cfg.audio = !cfg.audio; break;
         case 4: cfg.maxPerformance = !cfg.maxPerformance; break;
@@ -644,7 +650,8 @@ static void drawSettings(uint32_t pressed) {
     char vals[N][32];
     static const char* RES_NAMES[] = { "480p", "540p", "720p", "1080p" };
     snprintf(vals[0], 32, "%s", RES_NAMES[cfg.resIdx & 3]);
-    snprintf(vals[1], 32, "%d fps", cfg.fps);
+    if (cfg.fps == 0) snprintf(vals[1], 32, "%s", tr("Sınırsız", "Unlimited"));
+    else snprintf(vals[1], 32, "%d fps", cfg.fps);
     snprintf(vals[2], 32, "%d Mbps", cfg.bitrateMbps);
     snprintf(vals[3], 32, "%s", cfg.audio ? tr("Açık", "On") : tr("Kapalı", "Off"));
     snprintf(vals[4], 32, "%s", cfg.maxPerformance ? tr("Maksimum", "Maximum") : tr("Dengeli", "Balanced"));
@@ -866,7 +873,7 @@ static void bootNote(const char* stage, const char* detail = "", bool reset = fa
 }
 
 int main(int, char**) {
-    bootNote("Lumiri 1.4.1 startup", "", true);
+    bootNote("Lumiri 1.4.2 startup", "", true);
     char environment[96];
     const auto version = hosversionGet();
     snprintf(environment, sizeof(environment), "HOS=%u.%u.%u appletType=%u directBuild=%u",

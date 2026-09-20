@@ -1,4 +1,0 @@
-# RemotePlay ozel oyun listesi (UTF-8 kaydet)
-# Format: Oyun Adi|C:\Tam\Yol\oyun.exe|opsiyonel argumanlar
-# Ornek:
-# GTA V|D:\Games\GTAV\PlayGTAV.exe|

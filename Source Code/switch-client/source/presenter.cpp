@@ -124,12 +124,13 @@ bool rebuildSwapchain() {
 }
 
 Import* importFrame(const AVFrame* f) {
-    if (!f->buf[0] || !f->hw_frames_ctx) return nullptr;
+    if (!f->buf[0] || f->buf[0]->size < sizeof(AVNVTegraFrame) || !f->hw_frames_ctx) return nullptr;
     auto* hw = reinterpret_cast<AVHWFramesContext*>(f->hw_frames_ctx->data);
     if (hw->sw_format != AV_PIX_FMT_NV12) return nullptr;
     auto* nf = reinterpret_cast<AVNVTegraFrame*>(f->buf[0]->data);
     if (!nf->map_ref) return nullptr;
     AVNVTegraMap* map = av_nvtegra_frame_get_fbuf_map(f);
+    if (!map) return nullptr;
     uint32_t handle = av_nvtegra_map_get_handle(map);
     for (auto& entry : imports) {
         if (entry->handle == handle && entry->contextRef->data == f->hw_frames_ctx->data &&
@@ -408,7 +409,7 @@ void presenterExit() {
     diagnostic = nullptr;
     fbW = fbH = 0;
 }
-bool presenterHasFrame() { return current; }
+bool presenterHasFrame() { return current && current->data[0]; }
 const char* presenterPath() { return activeImport ? "NVDEC direct" : "GPU upload"; }
 uint32_t presenterUploadUs() { return uploadUs; }
 uint32_t presenterVideoCopyBytes() { return videoCopyBytes; }

@@ -1,3 +1,0 @@
-https://github.com/GPUOpen-LibrariesAndSDKs/AMF
-tag v1.4.36
-commit 16f7d73e0b45c473e903e46981ed0b91efc4c091

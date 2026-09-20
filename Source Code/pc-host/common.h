@@ -22,6 +22,7 @@ struct Session {
     uint16_t width = 1280, height = 720, fps = 60;
     uint32_t bitrateKbps = 8000;
     bool audioEnabled = true;
+    bool unlimitedFps = false;
 
     std::atomic<uint64_t> videoBytes{0}, videoFrames{0}, inputPkts{0}, sendErrors{0};
     std::atomic<uint32_t> captureUs{0}, encodeSendUs{0};

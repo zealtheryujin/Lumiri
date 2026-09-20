@@ -267,15 +267,16 @@ static void serveClient(SOCKET c, sockaddr_in peer) {
                     (hs.width == 960 && hs.height == 540) ||
                     (hs.width == 1280 && hs.height == 720) ||
                     (hs.width == 1920 && hs.height == 1080);
-    if (!validRes || (hs.fps != 30 && hs.fps != 60) ||
-        hs.bitrateKbps < 2000 || hs.bitrateKbps > 50000) {
+    if (!validRes || (hs.fps != 0 && hs.fps != 30 && hs.fps != 60 && hs.fps != 120) ||
+        hs.bitrateKbps < 2000 || hs.bitrateKbps > 35000) {
         RpHandshakeAck nak{ RP_MAGIC, 0, 0, 0 };
         send(c, (char*)&nak, sizeof(nak), 0);
         closesocket(c);
         return;
     }
     g_session.width = hs.width; g_session.height = hs.height;
-    g_session.fps = hs.fps; g_session.bitrateKbps = hs.bitrateKbps;
+    g_session.unlimitedFps = hs.fps == 0;
+    g_session.fps = hs.fps ? hs.fps : 120; g_session.bitrateKbps = hs.bitrateKbps;
     g_session.audioEnabled = hs.audioEnabled != 0;
     g_session.mediaAddr = peer;
     g_session.mediaAddr.sin_port = htons(RP_PORT_MEDIA);
@@ -287,7 +288,8 @@ static void serveClient(SOCKET c, sockaddr_in peer) {
     g_session.wantIdr = true;
     const ULONGLONG handshakeStart = GetTickCount64();
     logmsg("Handshake alindi: ekran hazirlaniyor");
-    optimizeDisplayRefresh(g_session.fps);
+    if (!g_session.unlimitedFps) optimizeDisplayRefresh(g_session.fps);
+    else logmsg("Stream FPS: Unlimited");
 
     if (g_session.audioEnabled) {
         logmsg("Handshake: ses yonlendirme");
@@ -376,10 +378,12 @@ int main(int argc, char** argv) {
     WSADATA wsa;
     if (WSAStartup(MAKEWORD(2, 2), &wsa) != 0) return 1;
     if (argc >= 3 && !strcmp(argv[1], "--video-selftest")) {
-        extern int videoSelfTest(const char*, bool, bool, bool);
+        extern int videoSelfTest(const char*, bool, bool, bool, unsigned);
         const int result = videoSelfTest(argv[2], argc > 3 && !strcmp(argv[3], "sync"),
                                         argc > 3 && !strcmp(argv[3], "slow"),
-                                        argc > 3 && !strcmp(argv[3], "monitor"));
+                                        argc > 3 && !strcmp(argv[3], "monitor"),
+                                        argc > 3 && !strcmp(argv[3], "unlimited") ? 0 :
+                                        argc > 3 && !strcmp(argv[3], "120") ? 120 : 60);
         WSACleanup(); return result;
     }
 

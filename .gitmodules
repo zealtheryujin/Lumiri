@@ -1,6 +1,0 @@
-[submodule "third_party/ViGEmClient"]
-	path = third_party/ViGEmClient
-	url = https://github.com/nefarius/ViGEmClient
-[submodule "third_party/nv-codec-headers"]
-	path = third_party/nv-codec-headers
-	url = https://github.com/FFmpeg/nv-codec-headers
