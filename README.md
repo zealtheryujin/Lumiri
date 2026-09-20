@@ -12,12 +12,10 @@ Lumiri is provided as is, without any assurance or warranty. You use the applica
 
 ### Setup and connection
 
-1. Extract `Lumiri.zip` into a folder on your PC. Close any previously running host.
-2. Run `firewall-onar.bat` as administrator.
-3. Open `host-baslat.bat` and wait for the host to be ready. Keep it open throughout the stream.
-4. Copy the included `switch/lumiri.nro` to the `switch/` folder on your Switch SD card.
-5. Open Lumiri in Homebrew Menu. Your PC and Switch must be on the same local network.
-6. Choose **Desktop** or a game from the discovered PC's library and press **A**. If discovery fails, press **X** to enter the PC's IPv4 address.
+1. Run the `lumiri-host.exe` file.
+2. Copy the included `switch/lumiri.nro` to the `switch/` folder on your Switch SD card.
+3. Open Lumiri in Homebrew Menu. Your PC and Switch must be on the same local network.
+4. Choose **Desktop** or a game from the discovered PC's library and press **A**. If discovery fails, press **X** to enter the PC's IPv4 address.
 
 Your PC needs an NVIDIA or AMD GPU with hardware H.264 encoding and a compatible graphics driver. The encoder is selected automatically. Virtual controller input requires ViGEmBus; the host can start its installer if missing. VB-Cable is optional. Use a homebrew environment compatible with your Switch firmware; application mode provides more memory than album applet mode.
 
@@ -107,12 +105,10 @@ Lumiri olduğu gibi sunulur; herhangi bir güvence veya garanti verilmez. Uygula
 
 ### Kurulum ve bağlantı
 
-1. `Lumiri.zip` dosyasını PC'de bir klasöre çıkart. Önceden açık olan host'u kapat.
-2. `firewall-onar.bat` dosyasını yönetici olarak çalıştır.
-3. `host-baslat.bat` dosyasını aç ve host'un hazır olmasını bekle. Host yayın boyunca açık kalmalı.
-4. Paketteki `switch/lumiri.nro` dosyasını Switch'in SD kartındaki `switch/` klasörüne kopyala.
-5. Lumiri'yi Homebrew Menu'den aç. PC ve Switch aynı yerel ağda olmalı.
-6. Bulunan PC'nin kütüphanesinden **Masaüstü** veya bir oyun seçip **A**'ya bas. PC bulunmazsa **X** ile IPv4 adresini gir.
+1. `lumiri-host.exe` dosyasını çalıştır.
+2. Paketteki `switch/lumiri.nro` dosyasını Switch'in SD kartındaki `switch/` klasörüne kopyala.
+3. Lumiri'yi Homebrew Menu'den aç. PC ve Switch aynı yerel ağda olmalı.
+4. Bulunan PC'nin kütüphanesinden **Masaüstü** veya bir oyun seçip **A**'ya bas. PC bulunmazsa **X** ile IPv4 adresini gir.
 
 PC'de H.264 kodlamayı destekleyen NVIDIA veya AMD ekran kartı ve uygun sürücüsü gerekir. Kodlayıcı otomatik seçilir. Sanal kontrolcü için ViGEmBus gerekir; host eksikse kurulumunu başlatabilir. VB-Cable isteğe bağlıdır. Switch'te sistem sürümünle uyumlu bir homebrew ortamı kullan; uygulama modu, albüm modundan daha fazla bellek sağlar.
 
